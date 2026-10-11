@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gatherly - Event Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header">
+  <a href="#home" class="logo">✦ Gatherly</a>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#events">Explore Events</a>
+    <a href="#bookings">My Bookings</a>
+    <a href="#calendar">Calendar</a>
+    <a href="#organizer">Organizer</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <p class="eyebrow">DISCOVER • CONNECT • EXPERIENCE</p>
+    <h1>Your next great<br>experience <span>starts here.</span></h1>
+    <p>Discover events, book your spot, and keep every plan in one place.</p>
+    <a href="#events" class="primary">Explore Events ↗</a>
+  </div>
+  <div class="hero-art">
+    <div class="art-circle">✦</div>
+    <div class="floating-card">🎟️ Your next memory awaits!</div>
+  </div>
+</section>
+
+<main>
+  <section class="stats">
+    <div class="stat"><span>Confirmed bookings</span><h2 id="bookingCount">0</h2></div>
+    <div class="stat"><span>Events to explore</span><h2 id="eventCount">6</h2></div>
+    <div class="stat"><span>Easy scheduling</span><h2>24/7</h2></div>
+  </section>
+
+  <section id="events" class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">FIND YOUR NEXT EXPERIENCE</p>
+        <h2>Explore Events</h2>
+      </div>
+      <input id="search" type="search" placeholder="Search events...">
+    </div>
+    <div class="filters">
+      <button class="filter active" data-category="All">All</button>
+      <button class="filter" data-category="Technology">Technology</button>
+      <button class="filter" data-category="Design">Design</button>
+      <button class="filter" data-category="Music">Music</button>
+      <button class="filter" data-category="Wellness">Wellness</button>
+    </div>
+    <div id="eventList" class="event-grid"></div>
+  </section>
+
+  <section id="bookingSection" class="section panel" hidden>
+    <p class="eyebrow">RESERVE YOUR SPOT</p>
+    <h2>Complete Your Booking</h2>
+    <p id="selectedEventSummary" class="muted"></p>
+
+    <form id="bookingForm" class="event-form">
+      <label>Full Name
+        <input id="fullName" type="text" required placeholder="Enter your full name">
+      </label>
+      <label>Email Address
+        <input id="email" type="email" required placeholder="Enter your email">
+      </label>
+      <label>Number of Tickets
+        <input id="tickets" type="number" min="1" max="10" value="1" required>
+      </label>
+      <label>Attendee Type
+        <select id="attendeeType" required>
+          <option value="">Select attendee type</option>
+          <option>Student</option>
+          <option>Professional</option>
+          <option>General Attendee</option>
+        </select>
+      </label>
+      <label class="wide">Special Request
+        <textarea id="specialRequest" placeholder="Any special requirements?"></textarea>
+      </label>
+      <p class="wide total-line">
+        Total Amount: ₹<strong id="bookingTotal">0</strong>
+      </p>
+      <button type="submit" class="primary wide">Continue to Payment →</button>
+      <button type="button" id="cancelBooking" class="secondary wide">Cancel</button>
+    </form>
+  </section>
+
+  <section id="paymentSection" class="section panel" hidden>
+    <p class="eyebrow">ALMOST THERE</p>
+    <h2>Payment Details</h2>
+    <form id="paymentForm" class="event-form">
+      <p class="wide total-line">
+        Amount to Pay: ₹<strong id="paymentTotal">0</strong>
+      </p>
+      <label class="wide">Payment Method
+        <select id="paymentMethod" required>
+          <option value="">Select payment method</option>
+          <option value="UPI (Demo)">UPI</option>
+          <option value="Credit/Debit Card (Demo)">Credit/Debit Card</option>
+          <option value="Pay at Venue">Pay at Venue</option>
+        </select>
+      </label>
+      <button type="submit" class="primary wide">Confirm Booking ✓</button>
+      <button type="button" id="cancelPayment" class="secondary wide">Back to Booking Details</button>
+    </form>
+  </section>
+
+  <!-- Updated Booking Confirmation -->
+  <section id="confirmationSection" class="section panel" hidden>
+    <div style="text-align:center; padding:20px 0;">
+      <div style="font-size:60px;">🎉</div>
+      <p class="eyebrow">BOOKING COMPLETE</p>
+      <h2>You're All Set!</h2>
+
+      <p style="font-size:18px; line-height:1.8;">
+        Your booking has been confirmed successfully!
+        Thank you for booking with Gatherly.
+      </p>
+    </div>
+
+    <div id="confirmationDetails" class="booking-list"></div>
+
+    <button type="button" id="viewBookings" class="primary">
+      View My Bookings
+    </button>
+  </section>
+
+  <section id="bookings" class="section">
+    <p class="eyebrow">YOUR PERSONAL LINEUP</p>
+    <h2>My Bookings</h2>
+    <p class="muted">Your confirmed reservations appear here.</p>
+    <div id="bookingList" class="booking-list"></div>
+  </section>
+
+  <section id="calendar" class="section">
+    <p class="eyebrow">KEEP YOUR PLANS IN SYNC</p>
+    <h2>My Calendar</h2>
+    <p class="muted">Export your booked events to a calendar application.</p>
+    <div id="calendarList" class="booking-list"></div>
+    <button class="primary" id="exportCalendar" type="button">
+      Export Calendar (.ics) ↗
+    </button>
+  </section>
+
+  <section id="organizer" class="section">
+    <p class="eyebrow">ORGANIZER WORKSPACE</p>
+    <h2>Create an Event</h2>
+    <p class="muted">Add an event to the event listings.</p>
+
+    <form id="eventForm" class="event-form">
+      <label>Event Name
+        <input name="name" required placeholder="Enter event name">
+      </label>
+      <label>Category
+        <select name="category" required>
+          <option>Technology</option>
+          <option>Design</option>
+          <option>Music</option>
+          <option>Wellness</option>
+        </select>
+      </label>
+      <label>Date
+        <input name="date" type="date" required>
+      </label>
+      <label>Time
+        <input name="time" type="time" value="10:00" required>
+      </label>
+      <label>Venue
+        <input name="venue" required placeholder="Enter venue">
+      </label>
+      <label>Ticket Price (₹)
+        <input name="price" type="number" min="0" value="0" required>
+      </label>
+      <label class="wide">Description
+        <textarea name="description" required placeholder="Describe your event"></textarea>
+      </label>
+      <button class="primary wide" type="submit">Publish Event +</button>
+    </form>
+
+    <h3 class="manage-title">Manage Your Events</h3>
+    <div id="createdList" class="booking-list"></div>
+  </section>
+</main>
+
+<footer>
+  <a href="#home" class="logo">✦ Gatherly</a>
+  <p>Web Technologies Project · Event Booking & Calendar Integration</p>
+</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
